@@ -103,9 +103,7 @@ class PiCreature(SVGMobject):
         return self
 
     def change_mode(self, mode):
-        new_self = self.__class__(
-            mode = mode,
-        )
+        new_self = self.__class__(mode=mode)
         new_self.match_style(self)
         new_self.match_height(self)
         if self.is_flipped() ^ new_self.is_flipped():
