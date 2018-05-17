@@ -7,6 +7,7 @@ class GenericMorphBrickRowIntoHistogram(Scene):
     CONFIG = {
         "level" : 3,
         "bar_width" : 2.0,
+        "brick_row_height" : 10,
         "bar_anchor_height" : -3.0,
         "show_tallies" : False,
         "show_nb_flips" : True
@@ -14,15 +15,17 @@ class GenericMorphBrickRowIntoHistogram(Scene):
 
     def construct(self):
 
-        self.row = BrickRow(self.level, height = self.bar_width, width = 10)
+        self.row = BrickRow(self.level,
+            height = self.bar_width,
+            width = self.brick_row_height
+        )
         self.bars = OutlineableBars(*[self.row.rects[i] for i in range(self.level + 1)])
         self.bar_anchors = [self.bar_anchor_height * UP + self.row.height * (i - 0.5 * self.level) * RIGHT for i in range(self.level + 1)]
 
         self.add(self.row)
+        tallies = VMobject()
 
         if self.show_tallies:
-
-            tallies = VMobject()
 
             for (i,brick) in enumerate(self.row.rects):
                 tally = TallyStack(self.level - i, i)
