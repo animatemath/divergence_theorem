@@ -93,59 +93,123 @@ class EntireBrickWall(BrickRowScene, MovingCameraScene):
             ShowCreation(last_row_rect)
         )
 
-        def highlighted_brick(row = 20, nb_tails = 10):
+        def highlighted_brick(row = 20, nb_tails = 10, with_labels = True):
             brick_copy = rows[row].rects[nb_tails].copy()
             brick_copy.set_fill(color = YELLOW, opacity = 0.8)
+            if not with_labels:
+                return brick_copy
             prob_percentage = float(choose(row, nb_tails)) / 2**row * 100
             brick_label = DecimalNumber(prob_percentage,
                 unit = "\%", num_decimal_places = 1, color = BLACK)
             brick_label.move_to(brick_copy)
             brick_label.scale_to_fit_height(0.8 * brick_copy.get_height())
+            
             return VGroup(brick_copy, brick_label)
 
         highlighted_bricks = [
-            highlighted_brick(row = 20, nb_tails = i)
-            for i in range(20)
+            highlighted_brick(row = 20, nb_tails = i, with_labels = False)
+            for i in range(21)
+        ]
+        highlighted_bricks_with_labels = [
+            highlighted_brick(row = 20, nb_tails = i, with_labels = True)
+            for i in range(21)
         ]
         self.wait()
         self.play(
-            FadeIn(highlighted_bricks[10])
+            FadeIn(highlighted_bricks_with_labels[10])
         )
         self.wait()
         self.play(
-            FadeOut(highlighted_bricks[10]),
-            FadeIn(highlighted_bricks[9]),
-            FadeIn(highlighted_bricks[11]),
+            FadeOut(highlighted_bricks_with_labels[10]),
+            FadeIn(highlighted_bricks_with_labels[9]),
+            FadeIn(highlighted_bricks_with_labels[11]),
         )
         self.wait()
         self.play(
-            FadeOut(highlighted_bricks[9]),
-            FadeOut(highlighted_bricks[11]),
-            FadeIn(highlighted_bricks[8]),
-            FadeIn(highlighted_bricks[12]),
+            FadeOut(highlighted_bricks_with_labels[9]),
+            FadeOut(highlighted_bricks_with_labels[11]),
+            FadeIn(highlighted_bricks_with_labels[8]),
+            FadeIn(highlighted_bricks_with_labels[12]),
         )
         self.wait()
         self.play(
-            FadeOut(highlighted_bricks[8]),
-            FadeOut(highlighted_bricks[12]),
+            FadeOut(highlighted_bricks_with_labels[8]),
+            FadeOut(highlighted_bricks_with_labels[12]),
+            FadeIn(highlighted_bricks[7]),
+            FadeIn(highlighted_bricks[13]),
+        )
+
+        for i in range(7,0,-1):
+            self.play(
+                FadeOut(highlighted_bricks[i]),
+                FadeOut(highlighted_bricks[20 - i]),
+                FadeIn(highlighted_bricks[i - 1]),
+                FadeIn(highlighted_bricks[20 - i + 1]),
+            )
+
+        self.play(
+            FadeOut(highlighted_bricks[0]),
+            FadeOut(highlighted_bricks[20]),    
             FadeOut(last_row_rect),
             rows.restore,
         )
-        self.wait()
-        new_frame = self.camera_frame.copy()
-        new_frame.scale(0.0001).move_to(rows.get_corner(DR))
+
+        # self.wait()
+        # new_frame = self.camera_frame.copy()
+        # new_frame.scale(0.0001).move_to(rows.get_corner(DR))
+
+        # self.play(
+        #     Transform(self.camera_frame, new_frame,
+        #         run_time = 9,
+        #         rate_func = exponential_decay
+        #     )
+        # )
+        self.rows = rows
+        self.tails_counters = tails_counters
+        self.nb_tails_text = nb_tails_text
+
+
+class HighlightRow20Again(EntireBrickWall):
+
+    def construct(self):
+
+        self.force_skipping()
+        super(HighlightRow20Again, self).construct()
+        self.remove(self.tails_counters)
+        self.revert_to_original_skipping_status()
 
         self.play(
-            Transform(self.camera_frame, new_frame,
-                run_time = 9,
-                rate_func = exponential_decay
-            )
+            VGroup(*[self.rows[:-1]]).fade, 0.9 
         )
 
+        for (i,rect) in enumerate(self.rows[-1].rects):
+            label = Integer(i, color = self.nb_tails_text.color)
+            label.next_to(rect, DOWN).shift(0.5 * DOWN)
+            arrow = Arrow(label, rect, buff = 0.2, color = self.nb_tails_text.color)
+            self.add(label, arrow)
+            self.wait(0.2)
+            self.remove(label, arrow)
 
 
 
+class HighlightSingleBrick(EntireBrickWall):
 
+    def construct(self):
+
+        self.force_skipping()
+        super(HighlightSingleBrick, self).construct()
+        self.revert_to_original_skipping_status()
+        self.rows.save_state()
+        self.rows[-1].print_submobject_family()
+        self.play(
+             VGroup(self.rows[:-1]).fade, 0.9,
+             VGroup(self.rows[-1].rects[:13]).fade, 0.9,
+             VGroup(self.rows[-1].rects[14:]).fade, 0.9,
+        )
+
+        self.wait()
+
+        self.play(self.rows.restore)
 
 
 

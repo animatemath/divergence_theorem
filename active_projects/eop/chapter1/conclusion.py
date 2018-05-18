@@ -14,7 +14,7 @@ class Conclusion(MorphBrickRowIntoHistogram100, StackingCoins):
         "scaled_height" : 5.0,
         "coin_scale" : 0.5,
         "stack_gap" : 0.4,
-        "stack_anchor" : 4 * LEFT + 2 * DOWN
+        "stack_anchor" : 4 * LEFT + 3 * DOWN
     }
 
     def construct(self):
@@ -26,18 +26,39 @@ class Conclusion(MorphBrickRowIntoHistogram100, StackingCoins):
         self.nb_tails_label.next_to(self.x_labels, RIGHT)
         self.nb_tails_label.shift(UP + 1.3 * LEFT)
         self.nb_flips_text.shift(0.5 * DOWN)
+        self.bars.fade(0.3)
 
         self.revert_to_original_skipping_status()
 
-        for i in range(20):
-            stack = self.build_up_stack(self.nb_flips)
+        lln = TextMobject("Law of Large Numbers", color =YELLOW)
+        lln.to_corner(UL, buff = LARGE_BUFF)
+        lln_rect = SurroundingRectangle(lln, buff = MED_SMALL_BUFF)
+
+        self.play(
+            Write(lln),
+            ShowCreation(lln_rect)
+        )
+
+        return
+
+        for i in range(50):
+
+            stack = self.build_up_stack(
+                self.nb_flips,
+                animated = True,
+                run_time = float(self.nb_flips) * self.frame_duration)
             nb_tails = stack[1].size
             rect = SurroundingRectangle(stack)
             rect.set_stroke(width = 0)
-            rect.target = SurroundingRectangle(self.bars[nb_tails], buff = 0).copy()
+            rect.target = SurroundingRectangle(
+                self.bars[nb_tails], buff = 0
+            ).copy()
+            rect.target.stretch(1,0)
             rect.target.set_stroke(width = 0)
-            rect.target.set_fill(color = YELLOW, opacity = 0.2)
+            rect.target.set_fill(color = YELLOW, opacity = 0.5)
             stack.target = stack.copy()
+            stack.target.stretch_to_fit_width(rect.target.get_width())
+            stack.target.stretch_to_fit_height(rect.target.get_height())
             stack.target.fade(1)
             stack.target.move_to(rect.target)
             self.play(
@@ -47,3 +68,18 @@ class Conclusion(MorphBrickRowIntoHistogram100, StackingCoins):
             print "========", i, "========"
 
         
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

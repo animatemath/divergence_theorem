@@ -44,3 +44,18 @@ class EmptyTSScene(TeacherStudentsScene):
             ApplyMethod(pi.look_at,ORIGIN) for pi in self.get_pi_creatures()
         ])
         self.wait(8)
+
+
+
+class EmptyTSSceneNoLook(TeacherStudentsScene):
+    CONFIG = {
+        "default_pi_creature_kwargs": {
+            "color": MAROON_E,
+            "flip_at_start": True,
+        },
+    }
+
+    def construct(self):
+
+        self.wait()
+        self.wait(8)

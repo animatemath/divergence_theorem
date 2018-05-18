@@ -38,6 +38,10 @@ class QuizResult(PiCreatureScene):
         grades = []
         grades_count = []
         hist_y_values = np.zeros(4)
+
+        randy = all_students[0]
+        morty = all_students[nb_students_y]
+
         for i in range(nb_students_x):
             for j in range(nb_students_y):
                 x = i * spacing_students_x
@@ -45,10 +49,17 @@ class QuizResult(PiCreatureScene):
                 #pi = PiCreature().scale(0.3)
                 #pi.move_to([x,y,0])
                 #all_students.add(pi)
-                all_students[i*nb_students_y + j].move_to([x,y,0])
+                student = all_students[i*nb_students_y + j]
+                student.move_to([x,y,0])
                 q1 = np.random.choice([True, False])
                 q2 = np.random.choice([True, False])
                 q3 = np.random.choice([True, False])
+
+                if student == randy:
+                    q1, q2, q3 = True, False, False
+                elif student == morty:
+                    q1, q2, q3 = False, True, False
+
                 student_points.append([q1, q2, q3])
                 grade = q1*1+q2*1+q3*1
                 grades.append(grade)
@@ -112,8 +123,6 @@ class QuizResult(PiCreatureScene):
         all_students.save_state()
         students_points_mob.save_state()
         self.wait()
-        randy = all_students[0]
-        morty = all_students[nb_students_y]
         all_other_students = VGroup(*all_students)
         all_other_students.remove(randy, morty)
         randy_points = students_points_mob[0]

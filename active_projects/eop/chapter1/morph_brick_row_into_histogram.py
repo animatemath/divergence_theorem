@@ -294,6 +294,12 @@ class MorphBrickRowIntoHistogram20(GenericMorphBrickRowIntoHistogram):
             self.bars, self.bars.outline, self.x_axis, self.x_labels, self.y_guides
         )
 
+        # self.play(
+        #     FadeOut(VGroup(
+        #         self.bars, self.x_axis, self.x_labels, self.y_guides, self.nb_tails_label, self.nb_flips_text
+        #     ))
+        # )
+
 
 
 class MorphBrickRowIntoHistogram100(MorphBrickRowIntoHistogram20):
