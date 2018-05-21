@@ -289,3 +289,18 @@ class FindInverse(SystemsOfEquationsWithoutVariables):
     CONFIG = {
         "matrices": [EXAMPLE_MATRIX, np.identity(3)]
     }
+
+
+class PiCreatureIntro(TeacherStudentsScene):
+    def construct(self):
+        self.teacher_says("Gaussian Elimination")
+        self.change_student_modes("hooray", "thinking", "hooray")
+        self.wait(3)
+        self.teacher_says(
+            "It's not as visual...",
+            target_mode="sassy"
+        )
+        self.change_student_modes("angry", "tired", "sad")
+        self.wait(4)
+        self.play(RemovePiCreatureBubble(teacher, target_mode="shruggie"))
+        self.wait(3)
