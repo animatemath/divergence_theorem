@@ -4,6 +4,9 @@ from utils.bezier import bezier
 from utils.simple_functions import sigmoid
 
 
+def linear(t):
+    return t
+
 def smooth(t, inflection=10.0):
     error = sigmoid(-inflection / 2)
     return (sigmoid(inflection * (t - 0.5)) - error) / (1 - 2 * error)
@@ -79,3 +82,24 @@ def squish_rate_func(func, a=0.4, b=0.6):
 
 def lingering(t):
     return squish_rate_func(lambda t: t, 0, 0.8)(t)
+
+def exponential_decay(t, half_life = 0.1):
+# The half-life should be rather small to minimize the cut-off error at the end
+    return 1 - np.exp(-t/half_life)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
