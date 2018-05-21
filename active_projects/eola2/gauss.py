@@ -293,14 +293,21 @@ class FindInverse(SystemsOfEquationsWithoutVariables):
 
 class PiCreatureIntro(TeacherStudentsScene):
     def construct(self):
-        self.teacher_says("Gaussian Elimination")
+        self.teacher_says("Gaussian\\\\Elimination")
         self.change_student_modes("hooray", "thinking", "hooray")
         self.wait(3)
         self.teacher_says(
-            "It's not as visual...",
+            "It's not \\\\ as visual...",
             target_mode="sassy"
         )
         self.change_student_modes("angry", "tired", "sad")
-        self.wait(4)
-        self.play(RemovePiCreatureBubble(teacher, target_mode="shruggie"))
+        self.wait(2)
+        self.play(RemovePiCreatureBubble(self.teacher, target_mode="shruggie"))
+        self.wait(3)
+
+
+class StepBackAndThinkAboutIt(TeacherStudentsScene):
+    def construct(self):
+        self.teacher_says("Think about what \\\\ just happened")
+        self.change_all_student_modes("pondering")
         self.wait(3)
