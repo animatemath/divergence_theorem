@@ -218,7 +218,7 @@ class BrickRowScene(PiCreatureScene):
         
 
     def construct(self):
-        self.force_skipping()
+        #self.force_skipping()
         
         randy = self.get_primary_pi_creature()
         randy = randy.scale(0.5).move_to(3*DOWN + 6*LEFT)
@@ -226,10 +226,18 @@ class BrickRowScene(PiCreatureScene):
         self.row = BrickRow(0, height = 2, width = 10)
         self.wait()
 
-        self.play(FadeIn(self.row))
+        brace = Brace(self.row, UP)
+        area_text = TextMobject("Area = 1").next_to(brace, UP)
 
+        self.play(
+            FadeIn(self.row)
+        )
+
+        self.play(
+            GrowFromCenter(brace),
+            Write(area_text)
+        )
         self.wait()
-
 
         # move in all kinds of sequences
         coin_seqs = VGroup()
@@ -252,6 +260,11 @@ class BrickRowScene(PiCreatureScene):
                 lag_ratio = 0.5
             )
         )
+
+
+        self.play(FadeOut(brace), FadeOut(area_text))
+
+        return
         
         # # # # # # # #
         # FIRST  FLIP #
@@ -985,6 +998,17 @@ class ShowProbsInBrickRow3(BrickRowScene):
         self.play(FadeOut(braces),FadeOut(probs))
 
 
+
+class JustRandyFlippingInCorner(BrickRowScene):
+
+    def construct(self):
+
+        randy = self.get_primary_pi_creature()
+        randy = randy.scale(0.5).move_to(3*DOWN + 6*LEFT)
+        randy.look_at(ORIGIN)
+        self.wait()
+        self.play(FlipCoin(randy))
+        self.wait()
 
 
 class ShowOutcomesInBrickRow4(BrickRowScene):

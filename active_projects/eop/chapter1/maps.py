@@ -39,4 +39,4 @@ class MapsOfPossibilities(TeacherStudentsScene):
         self.play(
             self.change_all_student_modes, "happy",
             self.teacher.change_mode, "happy",
-        )
+        ) 

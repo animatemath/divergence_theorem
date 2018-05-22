@@ -47,6 +47,7 @@ class EmptyTSScene(TeacherStudentsScene):
 
 
 
+
 class EmptyTSSceneNoLook(TeacherStudentsScene):
     CONFIG = {
         "default_pi_creature_kwargs": {
