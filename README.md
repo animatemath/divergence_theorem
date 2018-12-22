@@ -1,18 +1,18 @@
 #Clone
 This is a clone of the manim project. We plan to make an animation, that explains gauss' divergence theorem via manim
-# Manim - Mathematical Animation Engine
+## Manim - Mathematical Animation Engine
 [![Documentation Status](https://readthedocs.org/projects/manim/badge/?version=latest)](https://manim.readthedocs.io/en/latest/?badge=latest)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](http://choosealicense.com/licenses/mit/)
 
 Manim is an animation engine for explanatory math videos. It's used to create precise animations programmatically.
 
-## Installation
+### Installation
 Manim runs on python 3.7. You can install the python requirements with
 `pip install -r requirements.txt`. System requirements are
 [cairo](https://www.cairographics.org), [latex](https://www.latex-project.org),
 [ffmpeg](https://www.ffmpeg.org), and [sox](http://sox.sourceforge.net).
 
-### Directly
+#### Directly
 ```sh
 git clone https://github.com/3b1b/manim.git
 cd manim
@@ -20,7 +20,7 @@ pip install -r requirements.txt
 python3 extract_scene.py example_scenes.py SquareToCircle -pl
 ```
 
-### Using `virtualenv` and `virtualenvwrapper`
+#### Using `virtualenv` and `virtualenvwrapper`
 After installing `virtualenv` and `virtualenvwrapper`
 ```sh
 git clone https://github.com/3b1b/manim.git
@@ -28,7 +28,7 @@ mkvirtualenv -a manim -r requirements.txt manim
 python3 extract_scene.py example_scenes.py SquareToCircle -pl
 ```
 
-### Using Docker
+#### Using Docker
 Since it's a bit tricky to get all the dependencies set up just right, there is a Dockerfile provided in this repo as well as [a premade image on Docker Hub](https://hub.docker.com/r/eulertour/manim/tags/).
 
 The image does not contain a copy of the repo. This is intentional, as it allows you to either bind mount a repo that you've cloned locally or clone any fork/branch you want. Since test coverage is painfully lacking, the image may not have dependencies for all of manim.
@@ -47,7 +47,7 @@ python3 extract_scene.py example_scenes.py SquareToCircle -l
 ```
 Note that the image doesn't have any development tools installed and can't preview animations. Its purpose is building and testing only.
 
-## Using manim
+### Using manim
 Try running the following:
 ```sh
 python3 extract_scene.py example_scenes.py SquareToCircle -pl
@@ -64,13 +64,13 @@ Look through the old_projects folder to see the code for previous 3b1b videos.  
 
 While developing a scene, the `-s` flag is helpful to just see what things look like at the end without having to generate the full animation.  It can also be helpful to use the `-n` flag to skip over some number of animations.
 
-### Documentation
+#### Documentation
 Documentation is in progress at [manim.readthedocs.io](https://manim.readthedocs.io).
 
-### (Outdated) Walkthrough
+#### (Outdated) Walkthrough
 Todd Zimmerman put together a [tutorial](https://talkingphysics.wordpress.com/2018/06/11/learning-how-to-animate-videos-using-manim-series-a-journey/) on getting started with manim, but it uses an outdated version that runs on python 2.7. It may not be fully compatible with the current version of manim, but it does a good job laying out the basics.
 
-### Live Streaming
+#### Live Streaming
 To live stream your animations, simply assign `IS_LIVE_STREAMING = True` in `constants.py` file and from your Python Interactive Shell (`python3`) import the stream starter with `from stream_starter import *` while under the project directory. This will provide a clean interactive shell to enter your commands. `manim` object is a `Manim()` instance so as soon as you play an animation with `manim.play()` your stream will start. A video player will pop-up and you can broadcast that video using [OBS Studio](https://obsproject.com/) which is the most practical way of streaming with this math animation library. An example:
 
 ```
@@ -85,11 +85,11 @@ Animation 0: ShowCreationCircle: 100%|██████████████
 It is also possible to stream directly to Twitch. To do that simply assign `IS_STREAMING_TO_TWITCH = True` in `constants.py` file and put your Twitch Stream Key to `TWITCH_STREAM_KEY = "YOUR_STREAM_KEY"` and when you follow the above example the stream will directly start on your Twitch channel(with no audio support).
 
 
-## Contributing
+### Contributing
 Is always welcome. In particular, there is a dire need for tests and documentation.
 
 
-## License
+### License
 All files in the directories active_projects and old_projects, which by and large generate the visuals for 3b1b videos, are copyright 3Blue1Brown.
 
 The general purpose animation code found in the remainder of the repository, on the other hand, is under the MIT license.
