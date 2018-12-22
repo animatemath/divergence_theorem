@@ -1,3 +1,5 @@
+#Clone
+This is a clone of the manim project. We plan to make an animation, that explains gauss' divergence theorem via manim
 # Manim - Mathematical Animation Engine
 [![Documentation Status](https://readthedocs.org/projects/manim/badge/?version=latest)](https://manim.readthedocs.io/en/latest/?badge=latest)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](http://choosealicense.com/licenses/mit/)
